@@ -1,0 +1,13 @@
+.main-nav__list{
+  display: flex;
+  gap: 12px;
+}
+.p-relative {
+  position: relative;
+}
+.linear-loader {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+}
