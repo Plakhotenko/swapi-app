@@ -1,8 +1,7 @@
-import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ErrorBarContext } from "./providers/ErrorBarProvider";
-import { useParams } from "react-router-dom";
-import { client } from "./client";
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ErrorBarContext } from './providers/ErrorBarProvider';
+import { client } from './client';
 
 export const entityHookFactory = <T>(url: string) => () => {
   const [entity, setEntity] = useState<T>({} as T);
@@ -16,33 +15,36 @@ export const entityHookFactory = <T>(url: string) => () => {
 
   const itemUrl = `${url}/${id}`;
 
-  useEffect(() => {
-    (async () => {
-      const data = localStorage.getItem(itemUrl);
+  const fetchEntity = useCallback(async () => {
+    const data = localStorage.getItem(itemUrl);
 
-      if (data) {
-        setCacheLoading(true);
-        setEntity(JSON.parse(data));
+    if (data) {
+      setCacheLoading(true);
+      setEntity(JSON.parse(data));
+    } else {
+      setLoading(true);
+    }
+
+    try {
+      const { data } = await client.get<T>(itemUrl);
+      localStorage.setItem(itemUrl, JSON.stringify(data));
+      setEntity(data);
+      // eslint-disable-next-line
+    } catch (error: any) {
+      if (error?.response?.status === 404) {
+        redirect('/not-found');
       } else {
-        setLoading(true);
+        showError(error?.message);
       }
+    } finally {
+      setCacheLoading(false);
+      setLoading(false);
+    }
+  }, []);
 
-      try {
-        const { data } = await client.get<T>(itemUrl);
-        localStorage.setItem(itemUrl, JSON.stringify(data));
-        setEntity(data);
-      } catch (error: any) {
-        if (error?.response?.status === 404) {
-          redirect('/not-found');
-        } else {
-          showError(error?.message);
-        }
-      } finally {
-        setCacheLoading(false);
-        setLoading(false);
-      }
-    })()
-  }, [])
+  useEffect(() => {
+    fetchEntity();
+  }, []);
 
   return { entity, isLoading, isCacheLoading };
-}
+};

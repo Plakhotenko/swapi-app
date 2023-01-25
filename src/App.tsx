@@ -1,80 +1,80 @@
-import React, { FC } from "react";
-import { Container } from "@mui/material";
-import { BrowserRouter, Routes, Route, Navigate, RouteObject } from "react-router-dom";
-import { ErrorBar } from "./components/ErrorBar";
-import { Header } from "./components/Header";
-import { People } from "./components/People";
-import { Person } from "./components/Person";
-import { ErrorBarProvider } from "./providers/ErrorBarProvider";
-import { Films } from "./components/Films";
-import { Film } from "./components/Film";
-import { Starships } from "./components/Starships";
-import { Starship } from "./components/Starship";
-import { Vehicle } from "./components/Vehicle";
-import { Vehicles } from "./components/Vehicles";
-import { Species } from "./components/Species";
-import { Speccy } from "./components/Speccy";
-import { Planets } from "./components/Planets";
-import { Planet } from "./components/Planet";
-import { NotFound } from "./components/NotFound";
+import React, { FC } from 'react';
+import { Container } from '@mui/material';
+import { BrowserRouter, Routes, Route, Navigate, RouteObject } from 'react-router-dom';
+import { ErrorBar } from './components/ErrorBar';
+import { Header } from './components/Header';
+import { People } from './components/People';
+import { Person } from './components/Person';
+import { ErrorBarProvider } from './providers/ErrorBarProvider';
+import { Films } from './components/Films';
+import { Film } from './components/Film';
+import { Starships } from './components/Starships';
+import { Starship } from './components/Starship';
+import { Vehicle } from './components/Vehicle';
+import { Vehicles } from './components/Vehicles';
+import { Species } from './components/Species';
+import { Speccy } from './components/Speccy';
+import { Planets } from './components/Planets';
+import { Planet } from './components/Planet';
+import { NotFound } from './components/NotFound';
 
 const routerItems: RouteObject[] = [
   {
-    path: "/people",
+    path: '/people',
     element: <People />,
   },
   {
-    path: "/people/:id",
+    path: '/people/:id',
     element: <Person />,
   },
   {
-    path: "/films",
+    path: '/films',
     element: <Films />,
   },
   {
-    path: "/films/:id",
+    path: '/films/:id',
     element: <Film />,
   },
   {
-    path: "/starships",
+    path: '/starships',
     element: <Starships />,
   },
   {
-    path: "/starships/:id",
+    path: '/starships/:id',
     element: <Starship />,
   },
   {
-    path: "/vehicles",
+    path: '/vehicles',
     element: <Vehicles />,
   },
   {
-    path: "/vehicles/:id",
+    path: '/vehicles/:id',
     element: <Vehicle />,
   },
   {
-    path: "/species",
+    path: '/species',
     element: <Species />,
   },
   {
-    path: "/species/:id",
+    path: '/species/:id',
     element: <Speccy />,
   },
   {
-    path: "/planets",
+    path: '/planets',
     element: <Planets />,
   },
   {
-    path: "/planets/:id",
+    path: '/planets/:id',
     element: <Planet />,
   },
   {
-    path: "/not-found",
+    path: '/not-found',
     element: <NotFound />,
   },
   {
-    path: "*",
+    path: '*',
     element: <Navigate to="/people" />,
-  }
+  },
 ];
 
 const App: FC = () => (
@@ -83,11 +83,9 @@ const App: FC = () => (
       <BrowserRouter>
         <Header />
         <Routes>
-          {
-            routerItems.map(({ path, element }) => (
-              <Route key={path} element={element} path={path} />
-            ))
-          }
+          {routerItems.map(({ path, element }) => (
+            <Route key={path} element={element} path={path} />
+          ))}
         </Routes>
         <ErrorBar />
       </BrowserRouter>
