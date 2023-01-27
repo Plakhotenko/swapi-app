@@ -1,6 +1,6 @@
 import React, { FC, useContext } from 'react';
 import { Snackbar, Alert } from '@mui/material';
-import { ErrorBarContext } from '../providers/ErrorBarProvider';
+import { ErrorBarContext } from '../providers/error-bar.provider';
 
 export const ErrorBar: FC = () => {
   const { errorText, showError } = useContext(ErrorBarContext);

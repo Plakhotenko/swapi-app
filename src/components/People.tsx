@@ -2,18 +2,28 @@ import React, { FC } from 'react';
 import { Entities } from './Entities';
 import { entitiesHookFactory } from '../entities-hook-factory';
 import { IPerson } from '../models';
+import { useSelector, useDispatch } from '../state-manager';
+import { setPeople, setLoading, setCacheLoading } from '../store/people/reducers';
 
-const usePeople = entitiesHookFactory<IPerson>('/people');
+const usePeople = () => {
+  const { entities, isLoading, isCacheLoading } = entitiesHookFactory<IPerson>('/people')();
+  const dispatch = useDispatch();
+  dispatch(setPeople(entities));
+  dispatch(setLoading(isLoading));
+  dispatch(setCacheLoading(isCacheLoading));
+};
 
 export const People: FC = () => {
-  const { entities, isLoading, isCacheLoading } = usePeople();
+  usePeople();
+
+  const { entities, loading, cacheLoading } = useSelector((store) => store.people);
 
   return (
     <Entities
       entities={entities}
-      isLoading={isLoading}
+      isLoading={loading}
       entitiesUrl="people"
-      isCacheLoading={isCacheLoading}
+      isCacheLoading={cacheLoading}
     />
   );
 };
