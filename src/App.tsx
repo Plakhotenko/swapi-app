@@ -5,7 +5,7 @@ import { ErrorBar } from './components/ErrorBar';
 import { Header } from './components/Header';
 import { People } from './components/People';
 import { Person } from './components/Person';
-import { ErrorBarProvider } from './providers/ErrorBarProvider';
+import { ErrorBarProvider } from './providers/error-bar.provider';
 import { Films } from './components/Films';
 import { Film } from './components/Film';
 import { Starships } from './components/Starships';
@@ -17,6 +17,8 @@ import { Speccy } from './components/Speccy';
 import { Planets } from './components/Planets';
 import { Planet } from './components/Planet';
 import { NotFound } from './components/NotFound';
+import { StoreProvider } from './providers/store.provider';
+import { reducers } from './store/root-reducer';
 
 const routerItems: RouteObject[] = [
   {
@@ -78,19 +80,21 @@ const routerItems: RouteObject[] = [
 ];
 
 const App: FC = () => (
-  <ErrorBarProvider>
-    <Container>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          {routerItems.map(({ path, element }) => (
-            <Route key={path} element={element} path={path} />
-          ))}
-        </Routes>
-        <ErrorBar />
-      </BrowserRouter>
-    </Container>
-  </ErrorBarProvider>
+  <StoreProvider structure={reducers}>
+    <ErrorBarProvider>
+      <Container>
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            {routerItems.map(({ path, element }) => (
+              <Route key={path} element={element} path={path} />
+            ))}
+          </Routes>
+          <ErrorBar />
+        </BrowserRouter>
+      </Container>
+    </ErrorBarProvider>
+  </StoreProvider>
 );
 
 export default App;

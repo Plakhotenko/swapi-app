@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
-import { ErrorBarContext } from './providers/ErrorBarProvider';
+import { ErrorBarContext } from './providers/error-bar.provider';
 import { client } from './client';
 
 export const entitiesHookFactory = <T>(url: string) => () => {

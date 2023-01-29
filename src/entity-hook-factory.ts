@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ErrorBarContext } from './providers/ErrorBarProvider';
+import { ErrorBarContext } from './providers/error-bar.provider';
 import { client } from './client';
 
 export const entityHookFactory = <T>(url: string) => () => {
